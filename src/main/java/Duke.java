@@ -37,6 +37,7 @@ public class Duke {
      * @throws DukeException if an exception arises while reading input or creating parser object.
      */
     public Duke(String filepath) {
+        assert filepath == "listStore.ser";
         ui = new UI();
         storage = new Storage(filepath);
         try {
@@ -69,9 +70,9 @@ public class Duke {
         }
     }
 
-//    public static void main (String[]args) throws DukeException {
-//        new Duke("listStore.ser").run();
-//    }
+    public static void main (String[]args) throws DukeException {
+        new Duke("listStore.ser").run("Hello");
+    }
      
 
     // Input class represents user inputted tasks
@@ -169,8 +170,8 @@ public class Duke {
             this.filepath = filepath;
         }
 
-        /*
-         * Saves tasks in file specified by the filepath
+        /**
+         * Saves tasks in file specified by the filepath.
          *
          * @param list of tasks
          * @catch IOException
@@ -230,8 +231,8 @@ public class Duke {
             }
         }
 
-        /*
-         * Marks task, as specified by user, as done
+        /**
+         * Marks task, as specified by user, as done.
          *
          * @param nextLine, represents user input
          * @throws DukeException if user does not specify which task done, or if task specified is not in list
@@ -253,8 +254,8 @@ public class Duke {
             }
         }
 
-        /*
-         * removes task, as specified by the user, from list
+        /**
+         * removes task, as specified by the user, from list.
          *
          * @param nextLine, represents user input
          * @throws DukeException if user does not specify which task to remove or task is not in list
@@ -279,8 +280,8 @@ public class Duke {
             }
         }
 
-        /*
-         * Adds a to-do object to the list, and saves the list to hard disk
+        /**
+         * Adds a to-do object to the list, and saves the list to hard disk.
          *
          * @param nextLine, represents user input
          * @throws DukeException if user does not specify task to-do
@@ -293,6 +294,7 @@ public class Duke {
             inputs.add(todo);
             int count = inputs.size();
             storage.writeToFile(inputs);
+            assert inputs != null;
             return "Got it. I've added this task: \n" + "  [T][x] " + todo.content
                     + "\n Now you have " + count + " tasks in the list";
         }
@@ -313,6 +315,7 @@ public class Duke {
                 inputs.add(deadline);
                 int count = inputs.size();
                 storage.writeToFile(inputs);
+                assert inputs != null;
                 return ("Got it. I've added this task: \n" + "  [D][x] " + deadline.content
                         + deadline.printTime + "\n Now you have " + count + " tasks in the list");
             } catch (java.time.format.DateTimeParseException e) {
@@ -320,8 +323,8 @@ public class Duke {
             }
         }
 
-        /*
-         * Adds an event object to the list, and saves the list to hard disk
+        /**
+         * Adds an event object to the list, and saves the list to hard disk.
          *
          * @param nextLine, represents user input
          * @throws DukeException if user does not specify task
@@ -335,6 +338,7 @@ public class Duke {
             inputs.add(event);
             int count = inputs.size();
             storage.writeToFile(inputs);
+            assert inputs != null;
             return ("Got it. I've added this task: \n" + "  [E][x] " + event.content
                     + event.printTime + "\n Now you have " + count + " tasks in the list");
         }
@@ -401,7 +405,9 @@ public class Duke {
             this.inputs = inputs;
         }
 
-        /** Guides the TaskList based on user command
+        /** 
+         * Guides the TaskList based on user command.
+         * 
          * @throws DukeException
          */
         String parse() throws DukeException {
